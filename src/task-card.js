@@ -107,6 +107,14 @@ class TaskCard extends PolymerElement {
                 <paper-item>Complete</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
+            <paper-dropdown-menu on-iron-select="changeColor" label="Color" value="[[color]]">
+            <paper-listbox slot="dropdown-content" class="dropdown-content">
+              <paper-item>turquoise</paper-item>
+              <paper-item>orange</paper-item>
+              <paper-item>green</paper-item>
+              <paper-item>blue</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
         </section>
       </div>
     `;
@@ -129,6 +137,17 @@ class TaskCard extends PolymerElement {
       status__c: temp
     }
     const newEvent = new CustomEvent('status change', { detail: detail,  bubbles: true, composed: true });
+    this.dispatchEvent(newEvent);
+  }
+
+  changeColor(event) {
+    const temp = event.target.selectedItem.innerText;
+    const id = this.id;
+    const detail = {
+      id: id,
+      color__c: temp
+    }
+    const newEvent = new CustomEvent('color change', { detail: detail,  bubbles: true, composed: true });
     this.dispatchEvent(newEvent);
   }
 
