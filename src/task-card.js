@@ -76,6 +76,29 @@ class TaskCard extends PolymerElement {
           background: hsl(239, 82%, 44%)
         }
 
+        .btn {          
+          font-Family: 'Lato', Sans-Serif;          
+          cursor: pointer;          
+          position: absolute;          
+          top: 10vh;          
+          right: 2vw;          
+          height: 3vh;          
+          width: 8vw;          
+          text-align: center;          
+          background: whitesmoke;          
+          color: #24294a;          
+          font-size: 1em;          
+          border-radius: 15px;        
+          }                
+          
+          .btn:hover, .btn:focus {          
+            background:  rgb(218, 214, 214);        
+          }                
+
+          .btn:active {          
+            box-shadow: 0 1px 2px rgba(0,0,0, 0.5) inset;        
+          } 
+
         @media only screen and (max-width: 680px) {
           h2 {
            font-size: 1em;
@@ -115,6 +138,7 @@ class TaskCard extends PolymerElement {
               <paper-item>blue</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
+          <button class='btn' on-click="deleteTask">Delete</button>
         </section>
       </div>
     `;
@@ -137,23 +161,36 @@ class TaskCard extends PolymerElement {
       status__c: temp
     }
     const newEvent = new CustomEvent('status change', { detail: detail,  bubbles: true, composed: true });
-    this.dispatchEvent(newEvent);
+    this.dispatchEvent(newEvent); 
+  }
+
+  deleteTask(event) { 
+
+    const id = this.id;   
+    const detail = {
+      id: this.id,    
+    }    
+
+    const newEvent = new CustomEvent('delete task', { detail: detail,  bubbles: true, composed: true });
+      this.dispatchEvent(newEvent); 
   }
 
   changeColor(event) {
     const temp = event.target.selectedItem.innerText;
-    const id = this.id;
-    const detail = {
-      id: id,
-      color__c: temp
-    }
+      const id = this.id;
+      const detail = {
+        id: id,
+        color__c: temp
+      }
+
     const newEvent = new CustomEvent('color change', { detail: detail,  bubbles: true, composed: true });
-    this.dispatchEvent(newEvent);
+      this.dispatchEvent(newEvent);
   }
 
-  constructor() {
+    constructor() {
     super();
-  }
-}
+    }
 
-customElements.define('task-card', TaskCard);
+}
+    
+  customElements.define('task-card', TaskCard);
